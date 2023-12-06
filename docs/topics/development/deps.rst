@@ -38,6 +38,13 @@ You can also specify an exact version for the dependency:
 
 After installing a package, check the requirements file diff and make any necessary edits before submitting a pull request with the additions.
 
+Managing transitive dependencies
+-----------------------
+In local development and in CI we install packages using pip, reading from one or more requirements files and always passing the `--no-deps` flag.
+This prevents pip from installing transitive dependencies.
+
+We do this because it gives us control over the full dependency chain - we know exactly which version of what package is installed so we can fully reproduce & trust environments. 
+
 Choosing an environment
 -----------------------
 
