@@ -103,8 +103,6 @@ WORKDIR ${HOME}
 
 # Build locales, assets, build id.
 RUN locale/compile-mo.sh locale \
-    && python manage.py compress_assets \
-    && python manage.py generate_jsi18n_files \
-    && python manage.py collectstatic --noinput \
+    && make update_assets \
     && npm prune --production \
     && ./scripts/generate_build.py > build.py
