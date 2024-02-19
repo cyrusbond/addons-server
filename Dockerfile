@@ -102,11 +102,9 @@ RUN ln -s ${HOME}/package.json /deps/package.json \
 WORKDIR ${HOME}
 
 # Build locales, assets, build id.
-RUN echo "from olympia.lib.settings_base import *\n" \
-> settings_local.py && DJANGO_SETTINGS_MODULE='settings_local' locale/compile-mo.sh locale \
-    && DJANGO_SETTINGS_MODULE='settings_local' python manage.py compress_assets \
-    && DJANGO_SETTINGS_MODULE='settings_local' python manage.py generate_jsi18n_files \
-    && DJANGO_SETTINGS_MODULE='settings_local' python manage.py collectstatic --noinput \
+RUN locale/compile-mo.sh locale \
+    && python manage.py compress_assets \
+    && python manage.py generate_jsi18n_files \
+    && python manage.py collectstatic --noinput \
     && npm prune --production \
-    && ./scripts/generate_build.py > build.py \
-    && rm -f settings_local.py settings_local.pyc
+    && ./scripts/generate_build.py > build.py
